@@ -31,6 +31,7 @@ void OutputResult(int result[])
 int main()
 {
     int v;
+    // 读取数据
     for (int i = 0; i < 15; i++)
     {
         for (int j = 0; j < 10; j++)
@@ -39,10 +40,12 @@ int main()
             SetBit(&panju[i], j, v);
         }
     }
-    for(int i = 16;i<=19;i++)
+    // 添加下面四行全1
+    for (int i = 15; i < 19; i++)
     {
         panju[i] = ~0;
     }
+    // 读取掉落的方块
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
@@ -58,26 +61,29 @@ int main()
     {
         fangkuai[i] <<= (n - 1);
     }
-    int k = 19;
-    for (int i = 19; i >= 3; i--, k--)
+
+    int k = 0;    // 记录当前匹配的盘局的第一行 也比配方块的第一行  从0到14
+    int flag = 1; // 表示在当前位置可行
+    for (k = 0; k <= 14; k++)
     {
-        if (panju[i] & fangkuai[3])
-            continue;
-        if (panju[i - 1] & fangkuai[2])
-            continue;
-        if (panju[i - 2] & fangkuai[1])
-            continue;
-        if (panju[i - 3] & fangkuai[0])
-            continue;
-        else
-        {
+        if ((fangkuai[0] & panju[k]))
+            // 不通过
+            flag = 0;
+        if (fangkuai[1] & panju[k + 1])
+            flag = 0;
+        if (fangkuai[2] & panju[k + 2])
+            flag = 0;
+        if (fangkuai[3] & panju[k + 3])
+            flag = 0;
+
+        if (flag == 0)
             break;
-        }
     }
-    panju[k] |= fangkuai[3];
-    panju[k - 1] |= fangkuai[2];
-    panju[k - 2] |= fangkuai[1];
-    panju[k - 3] |= fangkuai[0];
+    k = k - 1;
+    panju[k] |= fangkuai[0];
+    panju[k + 1] |= fangkuai[1];
+    panju[k + 2] |= fangkuai[2];
+    panju[k + 3] |= fangkuai[3];
     OutputResult(panju);
     return 0;
 }
