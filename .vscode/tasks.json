@@ -3,12 +3,12 @@
         {
             "type": "shell",
             "label": "C/C++: gcc-9 build active file",
-            "command": "/usr/bin/gcc-9",
+            "command": "g++",
             "args": [
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/${fileBasenameNoExtension}.out"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
